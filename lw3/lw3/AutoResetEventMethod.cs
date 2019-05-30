@@ -12,21 +12,17 @@ namespace lw3
 
         public void Enter()
         {
-            bool isEntered = false;
-
-            for (int i = 0; i < m_spinCount; i++)
+            while (true)
             {
-                if (m_waitHandler.WaitOne(10))
+                for (int i = 0; i < m_spinCount; i++)
                 {
-                    isEntered = true;
-                    break;
+                    if (m_waitHandler.WaitOne(10))
+                    {
+                        return;
+                    }
                 }
-            }
 
-            if (!isEntered)
-            {
-                Thread.Sleep(10); 
-                m_waitHandler.WaitOne();
+                Thread.Sleep(10);
             }
         }
 
@@ -43,28 +39,44 @@ namespace lw3
         public bool TryEnter(int timeout)
         {
             var start = DateTime.UtcNow;
-            var isEntered = false;
 
-            for (int i = 0; i < m_spinCount; i++)
+            if (timeout == 0)
             {
-                if (m_waitHandler.WaitOne(10))
+                for (int i = 0; i < m_spinCount; i++)
                 {
-                    isEntered = true;
-                    break;
+                    if (m_waitHandler.WaitOne(10))
+                    {
+                        return true;
+                    }
+
+                    if (start.AddMilliseconds(timeout) <= DateTime.UtcNow)
+                    {
+                        return false;
+                    }
                 }
 
-                if (start.AddMilliseconds(timeout) <= DateTime.UtcNow)
-                {
-                    break;
-                }
-            }
-
-            if (!isEntered)
-            {
                 Thread.Sleep(10);
             }
 
-            return isEntered;
+            while (start.AddMilliseconds(timeout) > DateTime.UtcNow)
+            {
+                for (int i = 0; i < m_spinCount; i++)
+                {
+                    if (m_waitHandler.WaitOne(10))
+                    {
+                        return true;
+                    }
+
+                    if (start.AddMilliseconds(timeout) <= DateTime.UtcNow)
+                    {
+                        return false;
+                    }
+                }
+
+                Thread.Sleep(10);
+            }
+
+            return false;
         }
 
         public void Dispose()
