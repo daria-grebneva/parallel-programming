@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Dasha\.Rider2019.1\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Dasha\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_.19.00" t="ExcludeRecursive" />
+    <e p="E:\!git\parallel-programming\lw4\CurrencySaver" t="IncludeRecursive">
+      <e p="Adapters" t="Include">
+        <e p="CurrencyInfoAdapter.cs" t="Include" />
+        <e p="Entities" t="Include">
+          <e p="CurrencyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="CurrencyExchangeReceiver.csproj" t="IncludeRecursive" />
+      <e p="CurrencySaver.cs" t="Include" />
+      <e p="CurrencyUpdater.cs" t="Include" />
+      <e p="ExternalQueries" t="Include">
+        <e p="Dtos" t="Include">
+          <e p="ExternalCurrencies.cs" t="Include" />
+          <e p="ExternalCurrencyInfo.cs" t="Include" />
+        </e>
+        <e p="ExternalCurrencyQuery.cs" t="Include" />
+      </e>
+      <e p="names.txt" t="Include" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="packages.config" t="Include" />
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+        <e p="Resources.Designer.cs" t="Include" />
+        <e p="Resources.resx" t="Include" />
+        <e p="Settings.Designer.cs" t="Include" />
+        <e p="Settings.settings" t="Include" />
+      </e>
+      <e p="Queries" t="Include">
+        <e p="CurrencyNamesQuery.cs" t="Include" />
+      </e>
+      <e p="ReceiverForm.cs" t="Include" />
+      <e p="ReceiverForm.Designer.cs" t="Include" />
+      <e p="ReceiverForm.resx" t="Include" />
+      <e p="Utils" t="Include">
+        <e p="BaseClient.cs" t="Include" />
+      </e>
+      <e p="ViewModels" t="Include">
+        <e p="MainFormViewModel.cs" t="Include" />
+      </e>
+    </e>
+  </component>
+</project>
