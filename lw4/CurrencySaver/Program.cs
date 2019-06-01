@@ -14,7 +14,7 @@ namespace CurrencyExchangeReceiver
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new ReceiverForm( new MainFormViewModel() ) );
+            Application.Run( new ReceiverForm( new ReceiverFormViewModel() ) );
         }
     }
 }

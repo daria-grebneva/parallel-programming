@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CurrencyExchangeReceiver.ViewModels
 {
-    public class MainFormViewModel : INotifyPropertyChanged
+    public class ReceiverFormViewModel : INotifyPropertyChanged
     {
         private const string UpdateTimesPropertyName = "_updateTimes";
         private const int UpdatesCount = 30;
@@ -21,7 +21,7 @@ namespace CurrencyExchangeReceiver.ViewModels
         public List<string> UpdateTimes => _updateTimes.ConvertAll( ut => $"{ut.ToString()} ms" );
         public string AvgUpdateTime => Math.Round( _updateTimes.DefaultIfEmpty( 0 ).Average( ut => ut ), 4 ).ToString();
 
-        public MainFormViewModel()
+        public ReceiverFormViewModel()
         {
             _currencyUpdater = new CurrencyUpdater();
             _updateTimes = new List<long>();

@@ -31,7 +31,7 @@ namespace CurrencyExchangeReceiver
         public Dictionary<string, ExternalInfo> Valute;
     }
 
-    public class RequestCurrency
+    public class CurrencyUpdater
     {
         public static async Task<R> GetAsync<R>(string url)
         {
@@ -90,25 +90,15 @@ namespace CurrencyExchangeReceiver
         {
             return await GetAsync<Currencies>(Url);
         }
-    }
-
-    public class CurrencyData
-    {
-        private readonly RequestCurrency _RequestCurrency;
-
-        public CurrencyData(RequestCurrency RequestCurrency)
-        {
-            _RequestCurrency = RequestCurrency;
-        }
 
         public List<Info> Get()
         {
-            return Convert(_RequestCurrency.GetCurrencies());
+            return Convert(GetCurrencies());
         }
 
         public async Task<List<Info>> GetAsync()
         {
-            return Convert(await _RequestCurrency.GetCurrenciesAsync());
+            return Convert(await GetCurrenciesAsync());
         }
 
         private List<Info> Convert(Currencies Currencies)
@@ -125,10 +115,7 @@ namespace CurrencyExchangeReceiver
                 })
                 .ToList();
         }
-    }
 
-    public class RequestNames
-    {
         public List<string> GetCurrencies(string path)
         {
             using (var sr = new StreamReader(path))
@@ -146,37 +133,45 @@ namespace CurrencyExchangeReceiver
                 return line.Split(' ').ToList();
             }
         }
-    }
 
-    public class CurrencyUpdater
-    {
-        private readonly CurrencyData m_currencyData;
-        private readonly RequestNames m_requestNames;
-        private readonly CurrencySaver m_currencySaver;
-
-        public CurrencyUpdater()
+        public void Save(string path, List<Info> currencies)
         {
-            m_currencyData = new CurrencyData(new RequestCurrency());
-            m_requestNames = new RequestNames();
-            m_currencySaver = new CurrencySaver();
+            using (var sw = new StreamWriter(path))
+            {
+                foreach (Info currency in currencies)
+                {
+                    sw.WriteLine(currency.ToString());
+                }
+            }
+        }
+
+        public async Task SaveAsync(string path, List<Info> currencies)
+        {
+            using (var sw = new StreamWriter(path))
+            {
+                foreach (Info currency in currencies)
+                {
+                    await sw.WriteLineAsync(currency.ToString());
+                }
+            }
         }
 
         public void Update(string currencyNamesPath, string updatePath)
         {
-            List<string> currencyNames = m_requestNames.GetCurrencies(currencyNamesPath);
-            List<Info> currenciesInfo = m_currencyData.Get();
+            List<string> currencyNames = GetCurrencies(currencyNamesPath);
+            List<Info> currenciesInfo = Get();
             if (currencyNames.Any())
             {
                 currenciesInfo = currenciesInfo.Where(ci => currencyNames.Contains(ci.Currency)).ToList();
             }
 
-            m_currencySaver.Save(updatePath, currenciesInfo);
+            Save(updatePath, currenciesInfo);
         }
 
         public async Task UpdateAsync(string currencyNamesPath, string updatePath)
         {
-            Task<List<string>> currencyNamesTask = m_requestNames.GetCurrenciesAsync(currencyNamesPath);
-            Task<List<Info>> taskInfo = m_currencyData.GetAsync();
+            Task<List<string>> currencyNamesTask = GetCurrenciesAsync(currencyNamesPath);
+            Task<List<Info>> taskInfo = GetAsync();
             List<string> currencyNames = await currencyNamesTask;
             List<Info> currenciesInfo = await taskInfo;
 
@@ -185,32 +180,7 @@ namespace CurrencyExchangeReceiver
                 currenciesInfo = currenciesInfo.Where(ci => currencyNames.Contains(ci.Currency)).ToList();
             }
 
-            await m_currencySaver.SaveAsync(updatePath, currenciesInfo);
-        }
-    }
-
-    public class CurrencySaver
-    {
-        public void Save( string path, List<Info> currencies )
-        {
-            using ( var sw = new StreamWriter( path ) )
-            {
-                foreach ( Info currency in currencies )
-                {
-                    sw.WriteLine( currency.ToString() );
-                }
-            }
-        }
-
-        public async Task SaveAsync( string path, List<Info> currencies )
-        {
-            using ( var sw = new StreamWriter( path ) )
-            {
-                foreach ( Info currency in currencies )
-                {
-                    await sw.WriteLineAsync( currency.ToString() );
-                }
-            }
+            await SaveAsync(updatePath, currenciesInfo);
         }
     }
 }

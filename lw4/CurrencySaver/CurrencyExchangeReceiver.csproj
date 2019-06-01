@@ -59,7 +59,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\MainFormViewModel.cs" />
+    <Compile Include="ViewModels\ReceiverFormViewModel.cs" />
     <EmbeddedResource Include="ViewModels\ReceiverForm.resx">
       <DependentUpon>ReceiverForm.cs</DependentUpon>
     </EmbeddedResource>

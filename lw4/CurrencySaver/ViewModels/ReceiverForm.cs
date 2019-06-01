@@ -6,9 +6,9 @@ namespace CurrencyExchangeReceiver
 {
     public partial class ReceiverForm : Form
     {
-        private readonly MainFormViewModel _viewModel;
+        private readonly ReceiverFormViewModel _viewModel;
 
-        public ReceiverForm( MainFormViewModel mainFormViewModel )
+        public ReceiverForm( ReceiverFormViewModel mainFormViewModel )
         {
             InitializeComponent();
             _viewModel = mainFormViewModel;
