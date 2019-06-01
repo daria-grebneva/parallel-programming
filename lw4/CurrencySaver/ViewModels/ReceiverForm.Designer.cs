@@ -32,7 +32,7 @@
             this.outputFileLabel = new System.Windows.Forms.Label();
             this.inputFileBox = new System.Windows.Forms.TextBox();
             this.outputFileBox = new System.Windows.Forms.TextBox();
-            this._avgUpdateTimeDescriptionLabel = new System.Windows.Forms.Label();
+            this.averageTimeLabel = new System.Windows.Forms.Label();
             this.asyncRadioButton = new System.Windows.Forms.RadioButton();
             this.syncRadioButton = new System.Windows.Forms.RadioButton();
             this.processButton = new System.Windows.Forms.Button();
@@ -79,15 +79,15 @@
             this.outputFileBox.Size = new System.Drawing.Size(202, 20);
             this.outputFileBox.TabIndex = 3;
             // 
-            // _avgUpdateTimeDescriptionLabel
+            // averageTimeLabel
             // 
-            this._avgUpdateTimeDescriptionLabel.AutoSize = true;
-            this._avgUpdateTimeDescriptionLabel.Location = new System.Drawing.Point(231, 170);
-            this._avgUpdateTimeDescriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this._avgUpdateTimeDescriptionLabel.Name = "_avgUpdateTimeDescriptionLabel";
-            this._avgUpdateTimeDescriptionLabel.Size = new System.Drawing.Size(156, 13);
-            this._avgUpdateTimeDescriptionLabel.TabIndex = 4;
-            this._avgUpdateTimeDescriptionLabel.Text = "Среднее время выполнения: ";
+            this.averageTimeLabel.AutoSize = true;
+            this.averageTimeLabel.Location = new System.Drawing.Point(231, 170);
+            this.averageTimeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.averageTimeLabel.Name = "averageTimeLabel";
+            this.averageTimeLabel.Size = new System.Drawing.Size(156, 13);
+            this.averageTimeLabel.TabIndex = 4;
+            this.averageTimeLabel.Text = "Среднее время выполнения: ";
             // 
             // label2
             // 
@@ -186,7 +186,7 @@
             this.Controls.Add(this.syncRadioButton);
             this.Controls.Add(this.asyncRadioButton);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this._avgUpdateTimeDescriptionLabel);
+            this.Controls.Add(this.averageTimeLabel);
             this.Controls.Add(this.outputFileBox);
             this.Controls.Add(this.inputFileBox);
             this.Controls.Add(this.outputFileLabel);
@@ -205,7 +205,7 @@
         private System.Windows.Forms.Label outputFileLabel;
         private System.Windows.Forms.TextBox inputFileBox;
         private System.Windows.Forms.TextBox outputFileBox;
-        private System.Windows.Forms.Label _avgUpdateTimeDescriptionLabel;
+        private System.Windows.Forms.Label averageTimeLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton asyncRadioButton;
         private System.Windows.Forms.RadioButton syncRadioButton;

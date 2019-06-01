@@ -31,7 +31,7 @@ namespace CurrencyExchangeReceiver
         public Dictionary<string, ExternalInfo> Valute;
     }
 
-    public class CurrencyUpdater
+    public class CurrencyExchangeReceiver
     {
         public static async Task<R> GetAsync<R>(string url)
         {

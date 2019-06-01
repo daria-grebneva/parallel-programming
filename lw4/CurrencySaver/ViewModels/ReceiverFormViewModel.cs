@@ -10,63 +10,63 @@ namespace CurrencyExchangeReceiver.ViewModels
 {
     public class ReceiverFormViewModel : INotifyPropertyChanged
     {
-        private const string UpdateTimesPropertyName = "_updateTimes";
-        private const int UpdatesCount = 30;
+        private const string TimeUpdater = "timeUpdate";
+        private const int CountsUpdater = 30;
 
-        private readonly CurrencyUpdater _currencyUpdater;
-        private List<long> _updateTimes;
+        private readonly CurrencyExchangeReceiver currencyExchangeReceiver;
+        private List<long> timeUpdate;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<string> UpdateTimes => _updateTimes.ConvertAll( ut => $"{ut.ToString()} ms" );
-        public string AvgUpdateTime => Math.Round( _updateTimes.DefaultIfEmpty( 0 ).Average( ut => ut ), 4 ).ToString();
+        public List<string> UpdateTimes => timeUpdate.ConvertAll( ut => $"{ut.ToString()} ms" );
+        public string AvgUpdateTime => Math.Round( timeUpdate.DefaultIfEmpty( 0 ).Average( ut => ut ), 4 ).ToString();
 
         public ReceiverFormViewModel()
         {
-            _currencyUpdater = new CurrencyUpdater();
-            _updateTimes = new List<long>();
+            currencyExchangeReceiver = new CurrencyExchangeReceiver();
+            timeUpdate = new List<long>();
             PropertyChanged += MainFormViewModel_PropertyChanged;
         }
 
         public void SaveCurrencyInfos( string currencyNamesPath, string updatePath )
         {
-            _updateTimes.Clear();
-            for ( int i = 0; i < UpdatesCount; i++ )
+            timeUpdate.Clear();
+            for ( int i = 0; i < CountsUpdater; i++ )
             {
                 Stopwatch watch = Stopwatch.StartNew();
-                _currencyUpdater.Update( currencyNamesPath, updatePath );
+                currencyExchangeReceiver.Update( currencyNamesPath, updatePath );
                 watch.Stop();
                 long updateTime = watch.ElapsedMilliseconds;
-                bool isCorrectTime = _updateTimes.TrueForAll( ut => updateTime < ut * 2 && updateTime > ut / 2 ) || !_updateTimes.Any();
+                bool isCorrectTime = timeUpdate.TrueForAll( ut => updateTime < ut * 2 && updateTime > ut / 2 ) || !timeUpdate.Any();
                 if ( isCorrectTime )
                 {
-                    _updateTimes.Add( watch.ElapsedMilliseconds );
+                    timeUpdate.Add( watch.ElapsedMilliseconds );
                 }
             }
-            OnPropertyChanged( UpdateTimesPropertyName );
+            OnPropertyChanged( TimeUpdater );
         }
 
         public async Task SaveCurrencyInfosAsync( string currencyNamesPath, string updatePath )
         {
-            _updateTimes.Clear();
-            for ( int i = 0; i < UpdatesCount; i++ )
+            timeUpdate.Clear();
+            for ( int i = 0; i < CountsUpdater; i++ )
             {
                 Stopwatch watch = Stopwatch.StartNew();
-                await _currencyUpdater.UpdateAsync( currencyNamesPath, updatePath );
+                await currencyExchangeReceiver.UpdateAsync( currencyNamesPath, updatePath );
                 watch.Stop();
                 long updateTime = watch.ElapsedMilliseconds;
-                bool isCorrectTime = _updateTimes.TrueForAll( ut => updateTime < ut * 2 && updateTime > ut / 2 ) || !_updateTimes.Any();
+                bool isCorrectTime = timeUpdate.TrueForAll( ut => updateTime < ut * 2 && updateTime > ut / 2 ) || !timeUpdate.Any();
                 if ( isCorrectTime )
                 {
-                    _updateTimes.Add( watch.ElapsedMilliseconds );
+                    timeUpdate.Add( watch.ElapsedMilliseconds );
                 }
             }
-            OnPropertyChanged( UpdateTimesPropertyName );
+            OnPropertyChanged( TimeUpdater );
         }
 
         private void MainFormViewModel_PropertyChanged( object sender, PropertyChangedEventArgs e )
         {
-            if ( e.PropertyName == UpdateTimesPropertyName )
+            if ( e.PropertyName == TimeUpdater )
             {
                 OnPropertyChanged( "UpdateTimes" );
                 OnPropertyChanged( "AvgUpdateTime" );
