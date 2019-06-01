@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CurrencySaver.cs" />
+    <Compile Include="CurrencyExchangeReceiver.cs" />
     <Compile Include="ViewModels\ReceiverForm.cs">
       <SubType>Form</SubType>
     </Compile>
